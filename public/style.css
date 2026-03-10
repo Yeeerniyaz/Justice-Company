@@ -246,15 +246,20 @@ h4,
    SERVICES CARDS
    ========================================== */
 /* Исправленная сетка услуг для ноутбуков */
+/* ==========================================
+   JUSTICE COMPANY - FIXED LAPTOP GRID
+   ========================================== */
+
+/* Обновленная сетка: 3 колонки на ноутах, 1 на мобилках */
 .services-grid {
   display: grid;
-  gap: 20px;
-  grid-template-columns: 1fr; /* По умолчанию 1 колонка (мобилки) */
+  gap: 24px;
+  grid-template-columns: 1fr;
 }
 
 @media (min-width: 768px) {
   .services-grid {
-    grid-template-columns: repeat(2, 1fr); /* 2 колонки для планшетов */
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
@@ -262,44 +267,73 @@ h4,
   .services-grid {
     grid-template-columns: repeat(3, 1fr); /* 3 колонки для ноутбуков */
   }
-
-  /* Делаем так, чтобы если карточек 5, последние две были крупнее или центрировались */
-  .service-card:nth-child(4),
-  .service-card:nth-child(5) {
-    /* Опционально: можно оставить как есть, они просто займут свои места в сетке */
-  }
 }
 
-/* Стили самой карточки, чтобы текст не слипался */
+/* Переработанная карточка услуги */
 .service-card {
-  background: #1a1a1a;
-  border: 1px solid #333;
-  padding: 30px;
+  background: var(--black-card);
+  padding: 32px;
+  border: 1px solid var(--border-gray);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  height: 100%; /* Чтобы все карточки были одной высоты */
   transition:
-    transform 0.3s ease,
-    border-color 0.3s ease;
+    border-color 0.3s ease,
+    transform 0.3s ease;
 }
 
 .service-card:hover {
-  border-color: #d4af37; /* Золотой кант при наведении */
+  border-color: var(--gold-dim);
   transform: translateY(-5px);
 }
 
+/* Вертикальный стек заголовка и цены */
 .service-top {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-bottom: 15px;
+  flex-direction: column; /* Цена теперь ВСЕГДА под названием */
+  gap: 12px;
+  margin-bottom: 20px;
 }
 
+.service-card h3 {
+  font-size: 1.4rem;
+  color: var(--text-white);
+  line-height: 1.3;
+  margin: 0;
+}
+
+/* Цена как отдельный статусный элемент */
 .service-price {
-  color: #d4af37;
-  font-weight: bold;
-  white-space: nowrap; /* Чтобы цена не переносилась */
-  margin-left: 10px;
+  display: inline-flex;
+  align-self: flex-start; /* Прижимаем к левому краю */
+  color: var(--gold);
+  font-size: 0.95rem;
+  font-family: "Google Sans", sans-serif;
+  font-weight: 700;
+  padding: 4px 12px;
+  background: rgba(212, 175, 55, 0.1);
+  border: 1px solid var(--border-thin);
+  border-radius: 100px;
+  white-space: nowrap;
+}
+
+.service-card p {
+  color: var(--text-gray);
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Улучшение формы для десктопа */
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+}
+
+@media (min-width: 1024px) {
+  .contact-wrapper {
+    grid-template-columns: 1fr 1fr; /* На ноутах форма и текст в две колонки */
+  }
 }
 
 /* ==========================================
