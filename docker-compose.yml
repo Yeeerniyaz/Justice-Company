@@ -11,6 +11,7 @@ services:
       - PORT=4584
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - ADMIN_CHAT_ID=${ADMIN_CHAT_ID}
+      - DEVELOPER_CHAT_ID=${DEVELOPER_CHAT_ID}
     volumes:
       - justice_data:/app/data
 
