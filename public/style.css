@@ -245,48 +245,61 @@ h4,
 /* ==========================================
    SERVICES CARDS
    ========================================== */
+/* Исправленная сетка услуг для ноутбуков */
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+  gap: 20px;
+  grid-template-columns: 1fr; /* По умолчанию 1 колонка (мобилки) */
 }
 
+@media (min-width: 768px) {
+  .services-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 колонки для планшетов */
+  }
+}
+
+@media (min-width: 1024px) {
+  .services-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 колонки для ноутбуков */
+  }
+
+  /* Делаем так, чтобы если карточек 5, последние две были крупнее или центрировались */
+  .service-card:nth-child(4),
+  .service-card:nth-child(5) {
+    /* Опционально: можно оставить как есть, они просто займут свои места в сетке */
+  }
+}
+
+/* Стили самой карточки, чтобы текст не слипался */
 .service-card {
-  background: var(--black-card);
-  padding: 40px 30px;
-  border: 1px solid var(--border-gray);
-  transition: border-color 0.3s ease;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .service-card:hover {
-  border-color: var(--gold-dim);
+  border-color: #d4af37; /* Золотой кант при наведении */
+  transform: translateY(-5px);
 }
 
 .service-top {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
-}
-
-.service-card h3 {
-  font-size: 1.5rem;
-  color: var(--text-white);
-  max-width: 70%;
+  margin-bottom: 15px;
 }
 
 .service-price {
-  color: var(--gold);
-  font-size: 1rem;
-  font-family: "Google Sans", sans-serif;
-  padding: 4px 12px;
-  border: 1px solid var(--border-thin);
-  border-radius: 100px;
-}
-
-.service-card p {
-  color: var(--text-gray);
-  font-size: 1rem;
+  color: #d4af37;
+  font-weight: bold;
+  white-space: nowrap; /* Чтобы цена не переносилась */
+  margin-left: 10px;
 }
 
 /* ==========================================
