@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Justice Company | Элитная юридическая защита</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Alyamama:wght@300..900&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+    </style>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-wrap">
+            <div class="brand-logo">Justice company</div>
+            <a href="tel:<%= config.phone %>" class="nav-phone"><%= config.phone %></a>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <div class="hero-badge">Юридическая практика в РК</div>
+            <h1 class="hero-title">Законное решение<br>проблем с долгами<br>и арестами.</h1>
+            <p class="hero-subtitle">Освобождаем от давления банков, МФО и коллекторов. Снимаем аресты со счетов. Полная конфиденциальность.</p>
+            
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-gold">
+                    Получить <% if (config.isFreeConsultation) { %>бесплатный <% } %>разбор
+                </a>
+                <a href="<%= config.whatsapp %>" class="btn btn-outline" target="_blank">Написать в WhatsApp</a>
+            </div>
+        </div>
+        <div class="hero-line"></div>
+    </header>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Мы защищаем вас, если:</h2>
+            </div>
+            <div class="problems-list">
+                <div class="problem-item">
+                    <span class="problem-icon">✕</span>
+                    <p>Арестованы банковские счета и карты (Каспи, Халык и др.)</p>
+                </div>
+                <div class="problem-item">
+                    <span class="problem-icon">✕</span>
+                    <p>Накопились неподъемные долги перед банками и МФО</p>
+                </div>
+                <div class="problem-item">
+                    <span class="problem-icon">✕</span>
+                    <p>Коллекторы угрожают вам и вашим близким</p>
+                </div>
+                <div class="problem-item">
+                    <span class="problem-icon">✕</span>
+                    <p>Частные судебные исполнители наложили ограничения</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section section-darker">
+        <div class="container">
+            <div class="section-header">
+                <h2>Наши компетенции</h2>
+            </div>
+            <div class="services-grid">
+                
+                <div class="service-card">
+                    <div class="service-top">
+                        <h3>Банкротство физ. лиц</h3>
+                        <% if (config.showPriceList) { %>
+                            <span class="service-price"><%= config.prices.bankruptcy %></span>
+                        <% } %>
+                    </div>
+                    <p>Полное списание долгов по кредитам через процедуру банкротства. Официально и навсегда.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-top">
+                        <h3>Снятие арестов</h3>
+                        <% if (config.showPriceList) { %>
+                            <span class="service-price"><%= config.prices.arrests %></span>
+                        <% } %>
+                    </div>
+                    <p>Оспаривание действий ЧСИ, разблокировка зарплатных и социальных счетов в кратчайшие сроки.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-top">
+                        <h3>Переговоры с МФО</h3>
+                        <% if (config.showPriceList) { %>
+                            <span class="service-price"><%= config.prices.mfo %></span>
+                        <% } %>
+                    </div>
+                    <p>Списание незаконных пеней, реструктуризация микрозаймов и утверждение нового графика.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-top">
+                        <h3>Оформление ЛПХ</h3>
+                        <% if (config.showPriceList) { %>
+                            <span class="service-price"><%= config.prices.land %></span>
+                        <% } %>
+                    </div>
+                    <p>Получение земли по доверенности без вашего участия. Работаем напрямую с гос. органами.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Алгоритм работы</h2>
+            </div>
+            <div class="steps-grid">
+                <div class="step-item">
+                    <div class="step-number">01</div>
+                    <h4>Анализ ситуации</h4>
+                    <p>Изучаем ваши договоры и находим нарушения со стороны кредиторов.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">02</div>
+                    <h4>Стратегия защиты</h4>
+                    <p>Составляем пошаговый план: от снятия арестов до полного списания долга.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">03</div>
+                    <h4>Юридические действия</h4>
+                    <p>Подаем жалобы, останавливаем коллекторов, запускаем процедуру.</p>
+                </div>
+                <div class="step-item">
+                    <div class="step-number">04</div>
+                    <h4>Ваша свобода</h4>
+                    <p>Вы получаете официальные документы об отсутствии долгов и арестов.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section section-contact">
+        <div class="container">
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h2>Время работает против вас.</h2>
+                    <p>Каждый день просрочки увеличивает сумму долга. Оставьте заявку прямо сейчас, чтобы мы могли остановить этот процесс.</p>
+                </div>
+                <div class="contact-form-box">
+                    <% if (query.success) { %>
+                        <div class="alert">Ваша заявка принята. Юрист свяжется с вами в течение 15 минут.</div>
+                    <% } %>
+                    <form action="/submit-lead" method="POST">
+                        <div class="input-wrap">
+                            <input type="text" name="name" required placeholder="Как к вам обращаться?">
+                        </div>
+                        <div class="input-wrap">
+                            <input type="tel" name="phone" required placeholder="Ваш номер телефона">
+                        </div>
+                        <div class="input-wrap">
+                            <textarea name="problem" rows="2" placeholder="В чем заключается проблема? (необязательно)"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-gold btn-block">Оставить заявку</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <footer class="footer">
+        <div class="container footer-wrap">
+            <div class="footer-left">
+                <div class="brand-logo">Justice company</div>
+                <p>Юридическая компания РК</p>
+            </div>
+            <div class="footer-right">
+                <a href="tel:<%= config.phone %>" class="footer-link"><%= config.phone %></a>
+                <a href="<%= config.whatsapp %>" class="footer-link gold-text" target="_blank">Написать в WhatsApp</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

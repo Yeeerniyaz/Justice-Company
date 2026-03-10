@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  justice_app:
+    build: .
+    container_name: justice_company_web
+    restart: unless-stopped
+    ports:
+      - "5913:5913"
+    env_file:
+      - .env
+    volumes:
+      # ВАЖНО: Мы прокидываем файл конфига наружу. 
+      # Теперь, когда бот меняет цены, они сохраняются на жестком диске VPS.
+      - ./config.json:/app/config.json

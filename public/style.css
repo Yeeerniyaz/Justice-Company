@@ -1,0 +1,474 @@
+/* ==========================================
+   JUSTICE COMPANY - ELITE MOBILE-FIRST DESIGN
+   ========================================== */
+
+:root {
+  /* Цветовая палитра: Идеальный черный и Золото */
+  --black-pure: #000000;
+  --black-soft: #0a0a0c;
+  --black-card: #121215;
+
+  --gold: #d4af37;
+  --gold-dim: #9c8024;
+  --gold-light: #f4c430;
+
+  --text-white: #ffffff;
+  --text-gray: #8a8a93;
+
+  --border-thin: rgba(212, 175, 55, 0.15);
+  --border-gray: rgba(255, 255, 255, 0.08);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Google Sans", sans-serif;
+  background-color: var(--black-pure);
+  color: var(--text-white);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ==========================================
+   TYPOGRAPHY
+   ========================================== */
+h1,
+h2,
+h3,
+h4,
+.brand-logo {
+  font-family: "Alyamama", "Google Sans", serif;
+  font-weight: 700;
+}
+
+/* ==========================================
+   NAVBAR
+   ========================================== */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border-gray);
+  z-index: 100;
+}
+
+.nav-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-logo {
+  font-size: 1.5rem;
+  color: var(--text-white);
+  letter-spacing: 1px;
+}
+
+.brand-logo::after {
+  content: ".";
+  color: var(--gold);
+}
+
+.nav-phone {
+  color: var(--gold);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  font-family: "Google Sans", sans-serif;
+}
+
+/* ==========================================
+   HERO SECTION
+   ========================================== */
+.hero {
+  padding: 160px 0 80px;
+  position: relative;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(212, 175, 55, 0.05) 0%,
+    var(--black-pure) 70%
+  );
+}
+
+.hero-badge {
+  display: inline-block;
+  color: var(--gold);
+  border: 1px solid var(--border-thin);
+  padding: 6px 16px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+}
+
+.hero-title {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  line-height: 1.05;
+  margin-bottom: 30px;
+  letter-spacing: -1px;
+}
+
+.hero-subtitle {
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  color: var(--text-gray);
+  max-width: 600px;
+  margin-bottom: 40px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero-line {
+  position: absolute;
+  bottom: 0;
+  left: 20px;
+  right: 20px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-thin),
+    transparent
+  );
+}
+
+/* ==========================================
+   BUTTONS
+   ========================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px 32px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 0; /* Строгие прямые углы - признак премиума */
+  transition: all 0.3s ease;
+  cursor: pointer;
+  font-family: "Google Sans", sans-serif;
+}
+
+.btn-gold {
+  background-color: var(--gold);
+  color: var(--black-pure);
+  border: 1px solid var(--gold);
+}
+
+.btn-gold:hover {
+  background-color: var(--gold-light);
+  border-color: var(--gold-light);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-white);
+  border: 1px solid var(--border-gray);
+}
+
+.btn-outline:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn-block {
+  width: 100%;
+}
+
+/* ==========================================
+   SECTIONS & TYPOGRAPHY
+   ========================================== */
+.section {
+  padding: 100px 0;
+}
+
+.section-darker {
+  background-color: var(--black-soft);
+  border-top: 1px solid var(--border-gray);
+  border-bottom: 1px solid var(--border-gray);
+}
+
+.section-header h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin-bottom: 50px;
+  color: var(--text-white);
+}
+
+/* ==========================================
+   PROBLEMS LIST (Minimalist List)
+   ========================================== */
+.problems-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 800px;
+}
+
+.problem-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-gray);
+}
+
+.problem-icon {
+  color: var(--gold);
+  font-size: 1.2rem;
+  margin-top: 2px;
+}
+
+.problem-item p {
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: var(--text-white);
+}
+
+/* ==========================================
+   SERVICES CARDS
+   ========================================== */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.service-card {
+  background: var(--black-card);
+  padding: 40px 30px;
+  border: 1px solid var(--border-gray);
+  transition: border-color 0.3s ease;
+}
+
+.service-card:hover {
+  border-color: var(--gold-dim);
+}
+
+.service-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.service-card h3 {
+  font-size: 1.5rem;
+  color: var(--text-white);
+  max-width: 70%;
+}
+
+.service-price {
+  color: var(--gold);
+  font-size: 1rem;
+  font-family: "Google Sans", sans-serif;
+  padding: 4px 12px;
+  border: 1px solid var(--border-thin);
+  border-radius: 100px;
+}
+
+.service-card p {
+  color: var(--text-gray);
+  font-size: 1rem;
+}
+
+/* ==========================================
+   STEPS
+   ========================================== */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+}
+
+.step-item {
+  border-top: 2px solid var(--border-gray);
+  padding-top: 30px;
+}
+
+.step-number {
+  font-family: "Alyamama", serif;
+  font-size: 2.5rem;
+  color: var(--gold);
+  margin-bottom: 15px;
+  line-height: 1;
+}
+
+.step-item h4 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+}
+
+.step-item p {
+  color: var(--text-gray);
+}
+
+/* ==========================================
+   CONTACT FORM
+   ========================================== */
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+.contact-info h2 {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  margin-bottom: 24px;
+}
+
+.contact-info p {
+  color: var(--text-gray);
+  font-size: 1.1rem;
+}
+
+.contact-form-box {
+  background: var(--black-card);
+  padding: 40px;
+  border: 1px solid var(--border-gray);
+}
+
+.alert {
+  padding: 16px;
+  background: rgba(212, 175, 55, 0.1);
+  border-left: 4px solid var(--gold);
+  color: var(--gold);
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+}
+
+.input-wrap {
+  margin-bottom: 24px;
+}
+
+input,
+textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border-gray);
+  padding: 15px 0;
+  color: var(--text-white);
+  font-family: "Google Sans", sans-serif;
+  font-size: 1.1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #555;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--gold);
+}
+
+/* ==========================================
+   FOOTER
+   ========================================== */
+.footer {
+  padding: 60px 0;
+  border-top: 1px solid var(--border-gray);
+}
+
+.footer-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 40px;
+}
+
+.footer-left p {
+  color: var(--text-gray);
+  margin-top: 10px;
+}
+
+.footer-right {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: flex-end;
+}
+
+.footer-link {
+  color: var(--text-white);
+  text-decoration: none;
+  font-size: 1.1rem;
+}
+
+.gold-text {
+  color: var(--gold);
+}
+
+/* ==========================================
+   MOBILE RESPONSIVENESS (PERFECT FIT)
+   ========================================== */
+@media (max-width: 992px) {
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+}
+
+@media (max-width: 768px) {
+  /* На телефонах отступы меньше, чтобы экономить место */
+  .hero {
+    padding: 120px 0 60px;
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 16px;
+  }
+
+  .contact-form-box {
+    padding: 25px 20px;
+  }
+
+  .footer-wrap {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-right {
+    align-items: center;
+  }
+
+  .service-top {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .service-card h3 {
+    max-width: 100%;
+  }
+}
