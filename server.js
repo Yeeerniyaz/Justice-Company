@@ -13,19 +13,49 @@ const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID;
 
 if (!BOT_TOKEN || !ADMIN_CHAT_ID) {
-    console.error("КРИТИЧЕСКАЯ ОШИБКА: Не заданы TELEGRAM_BOT_TOKEN или ADMIN_CHAT_ID в файле .env");
+    console.error("КРИТИЧЕСКАЯ ОШИБКА: Не заданы TELEGRAM_BOT_TOKEN или ADMIN_CHAT_ID в переменных окружения");
     process.exit(1);
 }
 
-// Загрузка и сохранение конфигурации (наша NoSQL БД)
-const configPath = path.join(__dirname, 'config.json');
+// ==========================================
+// УМНАЯ ИНИЦИАЛИЗАЦИЯ БАЗЫ ДАННЫХ (JSON)
+// ==========================================
+const dataDir = path.join(__dirname, 'data');
+const configPath = path.join(dataDir, 'config.json');
+
+// Создаем папку data, если её нет (важно для Docker)
+if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir, { recursive: true });
+}
+
+// Дефолтные настройки сайта
+const defaultConfig = {
+    phone: "+7 776 963 69 66",
+    whatsapp: "https://wa.me/77769636966",
+    isFreeConsultation: true,
+    showPriceList: false,
+    prices: {
+        bankruptcy: "от 150 000 ₸",
+        arrests: "от 50 000 ₸",
+        mfo: "от 70 000 ₸",
+        land: "от 200 000 ₸"
+    }
+};
+
 let siteConfig;
 
-try {
-    siteConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-} catch (err) {
-    console.error("Ошибка чтения config.json. Убедитесь, что файл существует и содержит валидный JSON.", err);
-    process.exit(1);
+// Читаем или создаем конфиг
+if (fs.existsSync(configPath)) {
+    try {
+        siteConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+    } catch (err) {
+        console.error("Ошибка чтения config.json. Загружаем дефолтные настройки.", err);
+        siteConfig = defaultConfig;
+    }
+} else {
+    console.log("Файл config.json не найден. Создаем новый с дефолтными настройками...");
+    siteConfig = defaultConfig;
+    fs.writeFileSync(configPath, JSON.stringify(siteConfig, null, 2), 'utf8');
 }
 
 function saveConfig() {
@@ -38,36 +68,30 @@ function saveConfig() {
 
 // Инициализация Telegram-бота
 const bot = new TelegramBot(BOT_TOKEN, { polling: true });
-const adminStates = {}; // Объект для хранения состояний ввода админа
+const adminStates = {};
 
-// Настройка Express Middleware
+// Настройка Express
 app.use(cors());
-app.use(express.urlencoded({ extended: true })); // Для разбора данных из HTML-форм
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public'))); // Папка для CSS, JS, картинок
+app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // ==========================================
-// МАРШРУТЫ ВЕБ-СЕРВЕРА (ОДНОСТРАНИЧНИК И CRM)
+// МАРШРУТЫ ВЕБ-СЕРВЕРА
 // ==========================================
-
-// Главная страница
 app.get('/', (req, res) => {
-    // Отдаем шаблон index.ejs и прокидываем в него актуальный конфиг
     res.render('index', { config: siteConfig, query: req.query });
 });
 
-// Обработка формы заявки (CRM-логика)
 app.post('/submit-lead', async (req, res) => {
     const { name, phone, problem } = req.body;
-
     const text = `🚨 НОВАЯ ЗАЯВКА С САЙТА!\n\n👤 Имя: ${name || 'Не указано'}\n📞 Телефон: ${phone || 'Не указан'}\n⚠️ Проблема: ${problem || 'Не указана'}`;
 
     try {
         await bot.sendMessage(ADMIN_CHAT_ID, text);
-        // После успешной отправки перенаправляем обратно на сайт с флагом успеха
-        res.redirect('/?success=1');
+        res.redirect('/?success=1#contact');
     } catch (error) {
         console.error('Ошибка отправки лида в Telegram:', error);
         res.status(500).send('Ошибка сервера. Попробуйте позже.');
@@ -77,8 +101,6 @@ app.post('/submit-lead', async (req, res) => {
 // ==========================================
 // ЛОГИКА TELEGRAM БОТА (CMS ПАНЕЛЬ)
 // ==========================================
-
-// Генерация главного меню
 function getMainMenu() {
     return {
         reply_markup: {
@@ -93,7 +115,6 @@ function getMainMenu() {
     };
 }
 
-// Генерация меню управления ценами
 function getPricesMenu() {
     return {
         reply_markup: {
@@ -108,15 +129,12 @@ function getPricesMenu() {
     };
 }
 
-// Обработка команд /start и /admin
 bot.onText(/\/(start|admin)/, (msg) => {
     const chatId = msg.chat.id;
-    if (chatId.toString() !== ADMIN_CHAT_ID) return; // Строгая проверка прав доступа
-
+    if (chatId.toString() !== ADMIN_CHAT_ID) return;
     bot.sendMessage(chatId, '⚙️ Панель управления Justice Company:', getMainMenu());
 });
 
-// Обработка нажатий на inline-кнопки
 bot.on('callback_query', (query) => {
     const chatId = query.message.chat.id;
     if (chatId.toString() !== ADMIN_CHAT_ID) return;
@@ -125,18 +143,10 @@ bot.on('callback_query', (query) => {
     const messageId = query.message.message_id;
 
     if (data === 'menu_main') {
-        bot.editMessageText('⚙️ Панель управления Justice Company:', {
-            chat_id: chatId,
-            message_id: messageId,
-            ...getMainMenu()
-        });
+        bot.editMessageText('⚙️ Панель управления Justice Company:', { chat_id: chatId, message_id: messageId, ...getMainMenu() });
         delete adminStates[chatId];
     } else if (data === 'menu_prices') {
-        bot.editMessageText('💵 Управление ценами:', {
-            chat_id: chatId,
-            message_id: messageId,
-            ...getPricesMenu()
-        });
+        bot.editMessageText('💵 Управление ценами:', { chat_id: chatId, message_id: messageId, ...getPricesMenu() });
         delete adminStates[chatId];
     } else if (data === 'toggle_consultation') {
         siteConfig.isFreeConsultation = !siteConfig.isFreeConsultation;
@@ -147,7 +157,6 @@ bot.on('callback_query', (query) => {
         saveConfig();
         bot.editMessageReplyMarkup(getMainMenu().reply_markup, { chat_id: chatId, message_id: messageId });
     } else if (data.startsWith('edit_')) {
-        // Устанавливаем состояние ожидания текста от админа
         adminStates[chatId] = { action: data, messageId: messageId };
 
         let promptText = 'Отправьте новое значение:';
@@ -157,22 +166,19 @@ bot.on('callback_query', (query) => {
 
         bot.sendMessage(chatId, promptText);
     }
-
     bot.answerCallbackQuery(query.id);
 });
 
-// Обработка текстовых сообщений (ввод новых данных админом)
 bot.on('message', (msg) => {
     const chatId = msg.chat.id;
     if (chatId.toString() !== ADMIN_CHAT_ID) return;
-    if (msg.text && msg.text.startsWith('/')) return; // Игнорируем команды
+    if (msg.text && msg.text.startsWith('/')) return;
 
     const state = adminStates[chatId];
     if (state && msg.text) {
         const action = state.action;
         const newValue = msg.text;
 
-        // Обновляем нужный ключ в конфиге
         if (action === 'edit_phone') siteConfig.phone = newValue;
         else if (action === 'edit_whatsapp') siteConfig.whatsapp = newValue;
         else if (action === 'edit_price_bankruptcy') siteConfig.prices.bankruptcy = newValue;
@@ -183,20 +189,15 @@ bot.on('message', (msg) => {
         saveConfig();
         bot.sendMessage(chatId, '✅ Данные успешно обновлены! Сайт изменен.');
 
-        // Возвращаем соответствующее меню
         if (action.startsWith('edit_price_')) {
             bot.sendMessage(chatId, '💵 Управление ценами:', getPricesMenu());
         } else {
             bot.sendMessage(chatId, '⚙️ Панель управления Justice Company:', getMainMenu());
         }
-
-        // Сбрасываем состояние
         delete adminStates[chatId];
     }
 });
 
-// Запуск сервера
 app.listen(PORT, () => {
-    console.log(`🚀 Сервер Justice Company запущен на порту ${PORT}`);
-    console.log(`🤖 Telegram-бот ожидает команды от администратора (ID: ${ADMIN_CHAT_ID})`);
+    console.log(`🚀 Сервер запущен на порту ${PORT}`);
 });

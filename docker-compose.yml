@@ -6,10 +6,13 @@ services:
     container_name: justice_company_web
     restart: unless-stopped
     ports:
-      - "5411:5411"
+      - "4584:4584"
     environment:
-      - PORT=5411
+      - PORT=4584
       - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
       - ADMIN_CHAT_ID=${ADMIN_CHAT_ID}
     volumes:
-      - ./config.json:/app/config.json
+      - justice_data:/app/data
+
+volumes:
+  justice_data:
