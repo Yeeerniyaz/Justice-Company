@@ -13,7 +13,7 @@
 
     <nav class="navbar">
         <div class="container nav-wrap">
-            <div class="brand-logo">Justice.</div>
+            <div class="brand-logo">Justice Company.</div>
             <a href="tel:<%= config.phone %>" class="nav-phone"><%= config.phone %></a>
         </div>
     </nav>
@@ -84,7 +84,7 @@
                             <span class="service-price">от <%= Number(config.prices.arrests).toLocaleString('ru-RU') %> ₸</span>
                         <% } %>
                     </div>
-                    <p>Оспаривание действий ЧСИ, разблокировка зарплатных и социальных счетов в кратчайшие сроки.</p>
+                    <p>Оспаривание действий ЧСИ, разблокировка зарплатных, социальных и банковских счетов в кратчайшие сроки.</p>
                 </div>
 
                 <div class="service-card">
@@ -95,6 +95,16 @@
                         <% } %>
                     </div>
                     <p>Списание незаконных пеней, реструктуризация займов и утверждение нового графика платежей.</p>
+                </div>
+
+                <div class="service-card">
+                    <div class="service-top">
+                        <h3>Составление исков</h3>
+                        <% if (config.showPriceList) { %>
+                            <span class="service-price">от <%= Number(config.prices.lawsuits).toLocaleString('ru-RU') %> ₸</span>
+                        <% } %>
+                    </div>
+                    <p>Профессиональное составление административных и гражданских исков для защиты ваших прав в суде.</p>
                 </div>
 
                 <div class="service-card">
@@ -172,7 +182,7 @@
     <footer class="footer">
         <div class="container footer-wrap">
             <div class="footer-left">
-                <div class="brand-logo">Justice.</div>
+                <div class="brand-logo">Justice Company.</div>
                 <p>Юридическая компания РК</p>
             </div>
             <div class="footer-right">

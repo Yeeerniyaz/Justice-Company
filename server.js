@@ -33,7 +33,7 @@ if (!fs.existsSync(dataDir)) {
     fs.mkdirSync(dataDir, { recursive: true });
 }
 
-// Дефолтные настройки (теперь цены — это просто чистые цифры)
+// Дефолтные настройки (добавлена услуга исков)
 const defaultConfig = {
     phone: "+7 776 963 69 66",
     whatsapp: "https://wa.me/77769636966",
@@ -43,7 +43,8 @@ const defaultConfig = {
         bankruptcy: "150000",
         arrests: "50000",
         schedule: "70000", 
-        land: "200000"
+        land: "200000",
+        lawsuits: "15000" // Новая услуга
     }
 };
 
@@ -53,16 +54,23 @@ if (fs.existsSync(configPath)) {
     try {
         siteConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
         
-        // Очищаем старые цены от букв при перезапуске (если там было "от 150 000 ₸")
+        // Очищаем старые цены от букв при перезапуске
         for (let key in siteConfig.prices) {
-            siteConfig.prices[key] = siteConfig.prices[key].toString().replace(/\D/g, '');
-            if (!siteConfig.prices[key]) siteConfig.prices[key] = "0"; // Защита от пустой строки
+            if (siteConfig.prices[key]) {
+                siteConfig.prices[key] = siteConfig.prices[key].toString().replace(/\D/g, '');
+            }
+            if (!siteConfig.prices[key]) siteConfig.prices[key] = "0"; 
         }
         
+        // Миграция данных для новых услуг
         if (siteConfig.prices.mfo && !siteConfig.prices.schedule) {
             siteConfig.prices.schedule = siteConfig.prices.mfo;
             delete siteConfig.prices.mfo;
         }
+        if (!siteConfig.prices.lawsuits) {
+            siteConfig.prices.lawsuits = "15000"; // Авто-добавление новой цены в старую базу
+        }
+        
         saveConfig();
     } catch (err) {
         siteConfig = defaultConfig;
@@ -143,6 +151,7 @@ function getPricesMenu() {
                 [{ text: `Снятие арестов: ${formatPrice(siteConfig.prices.arrests)}`, callback_data: 'edit_price_arrests' }],
                 [{ text: `График в банке/МФО: ${formatPrice(siteConfig.prices.schedule)}`, callback_data: 'edit_price_schedule' }],
                 [{ text: `Оформление земли: ${formatPrice(siteConfig.prices.land)}`, callback_data: 'edit_price_land' }],
+                [{ text: `Составление исков: ${formatPrice(siteConfig.prices.lawsuits)}`, callback_data: 'edit_price_lawsuits' }],
                 [{ text: `🔙 Вернуться в главное меню`, callback_data: 'menu_main' }]
             ]
         }
@@ -201,7 +210,11 @@ bot.on('callback_query', (query) => {
         let promptText = 'Отправьте мне новое значение:';
         if (data === 'edit_phone') promptText = '📞 Отправьте новый номер телефона:';
         if (data === 'edit_whatsapp') promptText = '📱 Отправьте новую ссылку на WhatsApp:';
-        if (data.startsWith('edit_price_')) promptText = '💰 Отправьте новую цену ПРОСТО ЦИФРАМИ (например: 150000):';
+        if (data === 'edit_price_bankruptcy') promptText = '💰 Отправьте новую цену ПРОСТО ЦИФРАМИ (например: 150000):';
+        if (data === 'edit_price_arrests') promptText = '💰 Отправьте новую цену ПРОСТО ЦИФРАМИ (например: 50000):';
+        if (data === 'edit_price_schedule') promptText = '💰 Отправьте новую цену ПРОСТО ЦИФРАМИ (например: 70000):';
+        if (data === 'edit_price_land') promptText = '💰 Отправьте новую цену ПРОСТО ЦИФРАМИ (например: 200000):';
+        if (data === 'edit_price_lawsuits') promptText = '💰 Отправьте новую цену ПРОСТО ЦИФРАМИ (например: 15000):';
 
         bot.sendMessage(chatId, promptText, cancelKeyboard);
     }
@@ -219,10 +232,9 @@ bot.on('message', (msg) => {
         const action = state.action;
         let newValue = msg.text.trim();
 
-        // Если это цена, жестко вырезаем всё, кроме цифр (защита от дурака)
         if (action.startsWith('edit_price_')) {
             newValue = newValue.replace(/\D/g, ''); 
-            if (!newValue) newValue = "0"; // Если стерли всё, ставим 0
+            if (!newValue) newValue = "0"; 
         }
 
         if (action === 'edit_phone') siteConfig.phone = newValue;
@@ -231,6 +243,7 @@ bot.on('message', (msg) => {
         else if (action === 'edit_price_arrests') siteConfig.prices.arrests = newValue;
         else if (action === 'edit_price_schedule') siteConfig.prices.schedule = newValue;
         else if (action === 'edit_price_land') siteConfig.prices.land = newValue;
+        else if (action === 'edit_price_lawsuits') siteConfig.prices.lawsuits = newValue; // Сохранение новой цены
 
         saveConfig();
         
