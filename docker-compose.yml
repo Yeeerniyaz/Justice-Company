@@ -6,10 +6,10 @@ services:
     container_name: justice_company_web
     restart: unless-stopped
     ports:
-      - "5913:5913"
-    env_file:
-      - .env
+      - "5411:5411"
+    environment:
+      - PORT=5411
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN}
+      - ADMIN_CHAT_ID=${ADMIN_CHAT_ID}
     volumes:
-      # ВАЖНО: Мы прокидываем файл конфига наружу. 
-      # Теперь, когда бот меняет цены, они сохраняются на жестком диске VPS.
       - ./config.json:/app/config.json
