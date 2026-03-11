@@ -1,20 +1,38 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description"
+        content="Полное списание долгов в РК, снятие арестов с банковских счетов, банкротство физических лиц. Консультация юриста.">
+    <!-- Open Graph теги для соцсетей -->
+    <meta property="og:title" content="Justice Company | Элитная юридическая защита">
+    <meta property="og:description" content="Освобождаем от давления банков, МФО и коллекторов.">
+    <meta property="og:type" content="website">
+    <!-- Желательно добавить еще og:image и favicon -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+
     <title>Justice Company | Элитная юридическая защита</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Alyamama:wght@300..900&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alyamama:wght@300..900&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/style.css">
 </head>
+
 <body>
 
     <nav class="navbar">
         <div class="container nav-wrap">
             <div class="brand-logo">Justice Company</div>
-            <a href="tel:<%= config.phone %>" class="nav-phone"><%= config.phone %></a>
+            <div class="nav-links">
+                <a href="#services">Услуги</a>
+                <a href="#algorithm">Алгоритм</a>
+                <a href="#contact">Контакты</a>
+            </div>
+            <a href="tel:<%= config.phone %>" class="nav-phone">
+                <%= config.phone %>
+            </a>
         </div>
     </nav>
 
@@ -22,13 +40,14 @@
         <div class="container">
             <div class="hero-badge">Юридическая практика в РК</div>
             <h1 class="hero-title">Законное решение<br>проблем с долгами<br>и арестами.</h1>
-            <p class="hero-subtitle">Освобождаем от давления банков, МФО и коллекторов. Снимаем аресты со счетов. Полная конфиденциальность.</p>
-            
+            <p class="hero-subtitle">Освобождаем от давления банков, МФО и коллекторов. Снимаем аресты со счетов. Полная
+                конфиденциальность.</p>
+
             <div class="hero-buttons">
                 <a href="#contact" class="btn btn-gold">
                     Получить <% if (config.isFreeConsultation) { %>бесплатную <% } %>консультацию
                 </a>
-                <a href="<%= config.whatsapp %>" class="btn btn-outline" target="_blank">Написать в WhatsApp</a>
+                <a href="<%= config.whatsapp %>" class="btn btn-outline" target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
             </div>
         </div>
         <div class="hero-line"></div>
@@ -60,19 +79,20 @@
         </div>
     </section>
 
-    <section class="section section-darker">
+    <section id="services" class="section section-darker">
         <div class="container">
             <div class="section-header">
                 <h2>Наши компетенции</h2>
             </div>
             <div class="services-grid">
-                
+
                 <div class="service-card">
                     <div class="service-top">
                         <h3>Банкротство физ. лиц</h3>
                         <% if (config.showPriceList) { %>
-                            <span class="service-price">от <%= Number(config.prices.bankruptcy).toLocaleString('ru-RU') %> ₸</span>
-                        <% } %>
+                            <span class="service-price">от <%= Number(config.prices.bankruptcy).toLocaleString('ru-RU')
+                                    %> ₸</span>
+                            <% } %>
                     </div>
                     <p>Полное списание долгов по кредитам через процедуру банкротства. Официально и навсегда.</p>
                 </div>
@@ -81,18 +101,21 @@
                     <div class="service-top">
                         <h3>Снятие арестов</h3>
                         <% if (config.showPriceList) { %>
-                            <span class="service-price">от <%= Number(config.prices.arrests).toLocaleString('ru-RU') %> ₸</span>
-                        <% } %>
+                            <span class="service-price">от <%= Number(config.prices.arrests).toLocaleString('ru-RU') %>
+                                    ₸</span>
+                            <% } %>
                     </div>
-                    <p>Оспаривание действий ЧСИ, разблокировка зарплатных, социальных и банковских счетов в кратчайшие сроки.</p>
+                    <p>Оспаривание действий ЧСИ, разблокировка зарплатных, социальных и банковских счетов в кратчайшие
+                        сроки.</p>
                 </div>
 
                 <div class="service-card">
                     <div class="service-top">
                         <h3>График в банке/МФО</h3>
                         <% if (config.showPriceList) { %>
-                            <span class="service-price">от <%= Number(config.prices.schedule).toLocaleString('ru-RU') %> ₸</span>
-                        <% } %>
+                            <span class="service-price">от <%= Number(config.prices.schedule).toLocaleString('ru-RU') %>
+                                    ₸</span>
+                            <% } %>
                     </div>
                     <p>Списание незаконных пеней, реструктуризация займов и утверждение нового графика платежей.</p>
                 </div>
@@ -101,18 +124,21 @@
                     <div class="service-top">
                         <h3>Составление исков</h3>
                         <% if (config.showPriceList) { %>
-                            <span class="service-price">от <%= Number(config.prices.lawsuits).toLocaleString('ru-RU') %> ₸</span>
-                        <% } %>
+                            <span class="service-price">от <%= Number(config.prices.lawsuits).toLocaleString('ru-RU') %>
+                                    ₸</span>
+                            <% } %>
                     </div>
-                    <p>Профессиональное составление административных и гражданских исков для защиты ваших прав в суде.</p>
+                    <p>Профессиональное составление административных и гражданских исков для защиты ваших прав в суде.
+                    </p>
                 </div>
 
                 <div class="service-card">
                     <div class="service-top">
                         <h3>Оформление ЛПХ</h3>
                         <% if (config.showPriceList) { %>
-                            <span class="service-price">от <%= Number(config.prices.land).toLocaleString('ru-RU') %> ₸</span>
-                        <% } %>
+                            <span class="service-price">от <%= Number(config.prices.land).toLocaleString('ru-RU') %>
+                                    ₸</span>
+                            <% } %>
                     </div>
                     <p>Получение земли по доверенности без вашего участия. Работаем напрямую с гос. органами.</p>
                 </div>
@@ -121,7 +147,7 @@
         </div>
     </section>
 
-    <section class="section">
+    <section id="algorithm" class="section">
         <div class="container">
             <div class="section-header">
                 <h2>Алгоритм работы</h2>
@@ -151,29 +177,34 @@
         </div>
     </section>
 
+
+
     <section id="contact" class="section section-contact">
         <div class="container">
             <div class="contact-wrapper">
                 <div class="contact-info">
                     <h2>Время работает против вас.</h2>
-                    <p>Каждый день просрочки увеличивает сумму долга. Оставьте заявку прямо сейчас, чтобы получить профессиональную консультацию и остановить этот процесс.</p>
+                    <p>Каждый день просрочки увеличивает сумму долга. Оставьте заявку прямо сейчас, чтобы получить
+                        профессиональную консультацию и остановить этот процесс.</p>
                 </div>
                 <div class="contact-form-box">
                     <% if (query.success) { %>
                         <div class="alert">Ваша заявка принята. Юрист свяжется с вами в течение 15 минут.</div>
-                    <% } %>
-                    <form action="/submit-lead" method="POST">
-                        <div class="input-wrap">
-                            <input type="text" name="name" required placeholder="Как к вам обращаться?">
-                        </div>
-                        <div class="input-wrap">
-                            <input type="tel" name="phone" required placeholder="Ваш номер телефона">
-                        </div>
-                        <div class="input-wrap">
-                            <textarea name="problem" rows="2" placeholder="В чем заключается проблема? (необязательно)"></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-gold btn-block">Оставить заявку</button>
-                    </form>
+                        <% } %>
+                            <form action="/submit-lead" method="POST">
+                                <div class="input-wrap">
+                                    <input type="text" name="name" required placeholder="Как к вам обращаться?">
+                                </div>
+                                <div class="input-wrap">
+                                    <input type="tel" name="phone" id="phone-input" required placeholder="Ваш номер телефона">
+                                </div>
+                                <div class="input-wrap">
+                                    <textarea name="problem" rows="2"
+                                        placeholder="В чем заключается проблема? (необязательно)"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-gold btn-block">Оставить заявку</button>
+                                <p class="form-terms">Нажимая на кнопку, вы даете согласие на обработку персональных данных</p>
+                            </form>
                 </div>
             </div>
         </div>
@@ -186,11 +217,26 @@
                 <p>Юридическая компания РК</p>
             </div>
             <div class="footer-right">
-                <a href="tel:<%= config.phone %>" class="footer-link"><%= config.phone %></a>
-                <a href="<%= config.whatsapp %>" class="footer-link gold-text" target="_blank">Написать в WhatsApp</a>
+                <a href="tel:<%= config.phone %>" class="footer-link">
+                    <%= config.phone %>
+                </a>
+                <a href="<%= config.whatsapp %>" class="footer-link gold-text" target="_blank" rel="noopener noreferrer">Написать в WhatsApp</a>
             </div>
         </div>
     </footer>
 
+    <!-- Подключение маски для телефона -->
+    <script src="https://unpkg.com/imask"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var phoneInput = document.getElementById('phone-input');
+            if (phoneInput) {
+                IMask(phoneInput, {
+                    mask: '+{7} (000) 000-00-00'
+                });
+            }
+        });
+    </script>
 </body>
+
 </html>
